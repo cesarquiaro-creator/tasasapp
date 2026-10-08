@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CQ Asesoría Financiera - Control de Tasas</title>
+    <!-- Estilos de Web App Profesional -->
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --success-bg: #ecfdf5;
+            --success-text: #065f46;
+            --success-border: #a7f3d0;
+            --error-bg: #fef2f2;
+            --error-text: #991b1b;
+            --error-border: #fecaca;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            padding: 28px 24px;
+            box-sizing: border-box;
+            margin: 16px;
+        }
+
+        /* Contenedor del Logo Real */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .brand-header img {
+            max-width: 100%;
+            height: auto;
+            max-height: 110px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Formulario y Controles */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text-main);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-main);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            background-color: #ffffff;
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Alertas */
+        .message {
+            margin-top: 18px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
+            display: block;
+        }
+
+        .message.error {
+            background-color: var(--error-bg);
+            color: var(--error-text);
+            border: 1px solid var(--error-border);
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Encabezado con tu Logo Real -->
+        <div class="brand-header">
+            <img src="LOGO TASA DE CAMBIO.PNG" alt="CQ Asesoría Financiera Logo">
+            <div class="subtitle">Tasas & Cambio | Actualización Diaria</div>
+        </div>
+
+        <form id="tasaForm">
+            <div class="form-group">
+                <label for="fecha">Fecha del Registro</label>
+                <input type="date" id="fecha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tasa_usd">Tasa USD (BCV)</label>
+                <input type="number" id="tasa_usd" step="0.0001" placeholder="Ej: 36.5000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tasa_eur">Tasa EUR (BCV)</label>
+                <input type="number" id="tasa_eur" step="0.0001" placeholder="Ej: 39.2000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tasa_binance">Tasa Binance (USDT)</label>
+                <input type="number" id="tasa_binance" step="0.0001" placeholder="Ej: 37.1000" required>
+            </div>
+
+            <button type="submit" id="btnGuardar">Registrar en Supabase</button>
+        </form>
+
+        <div id="mensajeAlerta" class="message"></div>
+    </div>
+
+    <script>
+        const supabaseUrl = "https://bmqvbojzpbdhheploldb.supabase.co/rest/v1/tasas_bcv";
+        const apiKey = "sb_publishable_3-N_8fCjbM9I9LTUaue-jw_UikddNCK";
+
+        // Fecha actual por defecto
+        document.getElementById('fecha').valueAsDate = new Date();
+
+        document.getElementById('tasaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnGuardar');
+            const alerta = document.getElementById('mensajeAlerta');
+            
+            btn.disabled = true;
+            btn.textContent = "Verificando y guardando...";
+            alerta.className = "message";
+            alerta.style.display = "none";
+
+            const fecha = document.getElementById('fecha').value;
+            const tasa_usd = parseFloat(document.getElementById('tasa_usd').value);
+            const tasa_eur = parseFloat(document.getElementById('tasa_eur').value);
+            const tasa_binance = parseFloat(document.getElementById('tasa_binance').value);
+
+            const payload = {
+                fecha: fecha,
+                tasa_usd: tasa_usd,
+                tasa_eur: tasa_eur,
+                tasa_binance: tasa_binance
+            };
+
+            try {
+                // Usamos la directiva 'resolution=merge-duplicates' (Upsert) 
+                // para que si la fecha ya existe, actualice los datos limpiamente en lugar de dar error.
+                const response = await fetch(supabaseUrl, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': apiKey,
+                        'Authorization': 'Bearer ' + apiKey,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'resolution=merge-duplicates, return=representation'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alerta.textContent = "¡Tasa registrada/actualizada con éxito en Supabase!";
+                    alerta.className = "message success";
+                    document.getElementById('tasa_usd').value = '';
+                    document.getElementById('tasa_eur').value = '';
+                    document.getElementById('tasa_binance').value = '';
+                    document.getElementById('tasa_usd').focus();
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || "Error al procesar la solicitud.");
+                }
+            } catch (error) {
+                alerta.textContent = "Error: " + error.message;
+                alerta.className = "message error";
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Registrar en Supabase";
+            }
+        });
+    </script>
+</body>
+</html>
